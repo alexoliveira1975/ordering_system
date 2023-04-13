@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.adhocsolucoes.ordering_system.entities.User;
 import com.adhocsolucoes.ordering_system.repositories.UserRepository;
+import com.adhocsolucoes.ordering_system.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
